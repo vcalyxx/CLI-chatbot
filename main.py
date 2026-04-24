@@ -10,20 +10,34 @@ client = AnthropicBedrock(
 )
 
 def main():
-    user_input = input("You: ")
+    messages = []
 
-    print("Claude: ", end="", flush=True)
+    while True:
+        user_input = input("You: ")
 
-    with client.messages.stream(
-        model="us.anthropic.claude-sonnet-4-6",
-        max_tokens=300,
-        messages=[
-            {"role": "user", "content": user_input}
-        ]
-    ) as stream:
-        for text in stream.text_stream:
-            print(text, end="", flush=True)
-    print()
+        if user_input.lower() in ["exit", "quit"]:
+            print("Exiting...")
+            break
+
+        # add user message to the history
+        messages.append({"role": "user", "content": user_input})
+
+        print("Claude: ", end="", flush=True)
+
+        full_response = ""
+
+        with client.messages.stream(
+            model="us.anthropic.claude-sonnet-4-6",
+            max_tokens=300,
+            messages=messages
+        ) as stream:
+            for text in stream.text_stream:
+                print(text, end="", flush=True)
+                full_response += text
+        print()
+
+        # add assistant response to the history
+        messages.append({"role": "assistant", "content": full_response})
 
 if __name__ == "__main__":
     main()
