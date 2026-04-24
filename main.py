@@ -12,14 +12,18 @@ client = AnthropicBedrock(
 def main():
     user_input = input("You: ")
 
-    response = client.messages.create(
+    print("Claude: ", end="", flush=True)
+
+    with client.messages.stream(
         model="us.anthropic.claude-sonnet-4-6",
         max_tokens=300,
         messages=[
             {"role": "user", "content": user_input}
         ]
-    )
-    print("Claude:", response.content[0].text)
+    ) as stream:
+        for text in stream.text_stream:
+            print(text, end="", flush=True)
+    print()
 
 if __name__ == "__main__":
     main()
