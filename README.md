@@ -11,7 +11,7 @@ A simple terminal chatbot built with Claude. It keeps conversation history acros
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.13+
 - A Claude API key (direct from Anthropic) or an AWS Bedrock account with Claude access
 
 ## Setup
