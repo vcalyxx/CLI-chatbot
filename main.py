@@ -10,6 +10,8 @@ client = AnthropicBedrock(
 )
 
 def main():
+    system_prompt = "You are a concise AI Engineer assistant. Answer the user's questions in a clear and concise manner."
+
     messages = []
 
     while True:
@@ -29,6 +31,7 @@ def main():
         with client.messages.stream(
             model="us.anthropic.claude-sonnet-4-6",
             max_tokens=300,
+            system=system_prompt,
             messages=messages
         ) as stream:
             for text in stream.text_stream:
