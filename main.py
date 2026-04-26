@@ -1,11 +1,19 @@
 import os
+import sys
 from anthropic import AnthropicBedrock
 from dotenv import load_dotenv
 
 load_dotenv()
 
+# Validate required environment variables
+api_key = os.getenv("BEDROCK_API_KEY")
+if not api_key:
+    print("Error: BEDROCK_API_KEY not found in environment variables.")
+    print("Please create a .env file with your credentials (see .env.example)")
+    sys.exit(1)
+
 client = AnthropicBedrock(
-    api_key=os.getenv("BEDROCK_API_KEY"),
+    api_key=api_key,
     aws_region=os.getenv("AWS_REGION", "us-east-1"),
 )
 
