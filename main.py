@@ -16,6 +16,7 @@ client = AnthropicBedrock(
     api_key=api_key,
     aws_region=os.getenv("AWS_REGION", "us-east-1"),
 )
+MODEL = "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
 
 # Tool implementation
 def get_weather(city):
@@ -61,8 +62,8 @@ def main():
 
         # streaming response
         with client.messages.stream(
-            model="us.anthropic.claude-sonnet-4-6",
-            max_tokens=300,
+            model=MODEL,
+            max_tokens=1024,
             system=system_prompt,
             messages=messages,
             tools=tools,
@@ -113,8 +114,8 @@ def main():
 
             # get final response after tool result
             final = client.messages.create(
-                model="us.anthropic.claude-sonnet-4-6",
-                max_tokens=300,
+                model=MODEL,
+                max_tokens=1024,
                 system=system_prompt,
                 messages=messages,
             )
