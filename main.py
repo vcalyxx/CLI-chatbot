@@ -6,9 +6,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Validate required environment variables
-api_key = os.getenv("BEDROCK_API_KEY")
+api_key = os.getenv("AWS_BEARER_TOKEN_BEDROCK")
 if not api_key:
-    print("Error: BEDROCK_API_KEY not found in environment variables.")
+    print("Error: AWS_BEARER_TOKEN_BEDROCK not found in environment variables.")
     print("Please create a .env file with your credentials (see .env.example)")
     sys.exit(1)
 
